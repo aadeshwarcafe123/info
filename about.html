@@ -1,0 +1,408 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>About Us - Aadeshwar Café | Heritage Story & Tradition</title>
+    <meta name="description" content="Discover the story behind Aadeshwar Café in Heritage Town, Puducherry. Learn about our commitment to authentic flavors, heritage architecture, and traditional recipes.">
+    
+    <!-- Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=Poppins:wght@300;400;500;600&family=Merriweather:wght@300;400&display=swap" rel="stylesheet">
+    
+    <!-- Core Libraries -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@splidejs/splide@4.1.4/dist/js/splide.min.js"></script>
+    <link href="https://cdn.jsdelivr.net/npm/@splidejs/splide@4.1.4/dist/css/splide.min.css" rel="stylesheet">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/echarts/5.4.3/echarts.min.js"></script>
+    
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        'heritage-yellow': '#F4D03F',
+                        'colonial-cream': '#F8F4E6',
+                        'terracotta-warm': '#CD853F',
+                        'monsoon-green': '#7D8471',
+                        'bougainvillea-pink': '#E8B4B8',
+                        'deep-charcoal': '#2C3E50'
+                    },
+                    fontFamily: {
+                        'display': ['Playfair Display', 'serif'],
+                        'body': ['Poppins', 'sans-serif'],
+                        'accent': ['Merriweather', 'serif']
+                    }
+                }
+            }
+        }
+    </script>
+    
+    <style>
+        .hero-bg {
+            background: linear-gradient(135deg, #F4D03F 0%, #F8F4E6 50%, #CD853F 100%);
+            background-size: 400% 400%;
+            animation: gradientShift 8s ease-in-out infinite;
+        }
+        
+        @keyframes gradientShift {
+            0%, 100% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+        }
+        
+        .text-gradient {
+            background: linear-gradient(135deg, #2C3E50, #CD853F);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        
+        .card-hover {
+            transition: all 0.3s ease;
+        }
+        
+        .card-hover:hover {
+            transform: translateY(-8px) scale(1.02);
+            box-shadow: 0 20px 40px rgba(44, 62, 80, 0.15);
+        }
+        
+        .reveal {
+            opacity: 0;
+            transform: translateY(30px);
+        }
+        
+        .reveal.active {
+            opacity: 1;
+            transform: translateY(0);
+            transition: all 0.6s ease;
+        }
+        
+        .floating {
+            animation: float 3s ease-in-out infinite;
+        }
+        
+        @keyframes float {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-10px); }
+        }
+        
+        .pulse-glow {
+            animation: pulseGlow 2s ease-in-out infinite;
+        }
+        
+        @keyframes pulseGlow {
+            0%, 100% { box-shadow: 0 0 20px rgba(244, 208, 63, 0.3); }
+            50% { box-shadow: 0 0 30px rgba(244, 208, 63, 0.6); }
+        }
+    </style>
+</head>
+<body class="font-body bg-colonial-cream text-deep-charcoal">
+    <!-- Navigation -->
+    <nav class="fixed top-0 w-full bg-white/95 backdrop-blur-sm z-50 shadow-sm">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center h-16">
+                <div class="flex items-center">
+                    <h1 class="text-2xl font-display font-bold text-gradient">Aadeshwar Café</h1>
+                </div>
+                <div class="hidden md:flex space-x-8">
+                    <a href="index.html" class="text-deep-charcoal hover:text-heritage-yellow transition-colors font-medium">Home</a>
+                    <a href="menu.html" class="text-deep-charcoal hover:text-heritage-yellow transition-colors font-medium">Menu</a>
+                    <a href="about.html" class="text-heritage-yellow font-medium">About</a>
+                    <a href="contact.html" class="text-deep-charcoal hover:text-heritage-yellow transition-colors font-medium">Contact</a>
+                </div>
+                <div class="flex items-center space-x-4">
+                    <a href="tel:+919514548888" class="bg-heritage-yellow text-deep-charcoal px-4 py-2 rounded-full font-medium hover:bg-opacity-90 transition-all pulse-glow">
+                        Order Now
+                    </a>
+                    <button class="md:hidden" id="mobile-menu-btn">
+                        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
+                        </svg>
+                    </button>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Mobile Menu -->
+        <div class="md:hidden hidden" id="mobile-menu">
+            <div class="px-2 pt-2 pb-3 space-y-1 bg-white border-t">
+                <a href="index.html" class="block px-3 py-2 text-deep-charcoal hover:text-heritage-yellow">Home</a>
+                <a href="menu.html" class="block px-3 py-2 text-deep-charcoal hover:text-heritage-yellow">Menu</a>
+                <a href="about.html" class="block px-3 py-2 text-heritage-yellow">About</a>
+                <a href="contact.html" class="block px-3 py-2 text-deep-charcoal hover:text-heritage-yellow">Contact</a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="relative min-h-96 flex items-center justify-center hero-bg overflow-hidden">
+        <div class="absolute inset-0 bg-black/20"></div>
+        <div class="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+            <h1 class="text-4xl md:text-6xl font-display font-bold text-white mb-6 leading-tight">
+                Our <span class="text-heritage-yellow">Story</span>
+            </h1>
+            <p class="text-xl text-white/90 max-w-3xl mx-auto">
+                A journey through heritage, flavors, and the heart of Puducherry's culinary culture
+            </p>
+        </div>
+    </section>
+
+    <!-- Heritage Story -->
+    <section class="py-20 bg-white">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid lg:grid-cols-2 gap-16 items-center">
+                <div class="reveal">
+                    <img src="resources/about-interior.jpg" alt="Aadeshwar Café Interior" class="w-full h-96 object-cover rounded-2xl shadow-lg">
+                </div>
+                <div class="reveal">
+                    <h2 class="text-4xl md:text-5xl font-display font-bold text-gradient mb-6">
+                        Heritage Meets <span class="text-heritage-yellow">Flavor</span>
+                    </h2>
+                    <p class="text-lg text-monsoon-green mb-6 leading-relaxed">
+                        Nestled in the heart of Heritage Town, Puducherry, Aadeshwar Café stands as a testament to the beautiful fusion of French colonial architecture and authentic Indian street food culture. Our story began with a simple vision: to create a space where the rich culinary traditions of India could be savored within the timeless elegance of Puducherry's French Quarter.
+                    </p>
+                    <p class="text-lg text-monsoon-green mb-6 leading-relaxed">
+                        The building that houses our café dates back to the colonial era, with its high ceilings, arched windows, and warm yellow ochre walls that tell stories of a bygone era. We've carefully preserved these architectural gems while infusing the space with the vibrant energy of Indian street food culture.
+                    </p>
+                    <p class="text-lg text-monsoon-green leading-relaxed">
+                        Every dish we serve carries the legacy of traditional recipes passed down through generations, prepared with the same love and attention to detail that has made Indian street food a global phenomenon.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Mission & Vision -->
+    <section class="py-20 hero-bg">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-16 reveal">
+                <h2 class="text-4xl md:text-5xl font-display font-bold text-white mb-4">Our Mission</h2>
+                <p class="text-xl text-white/90 max-w-3xl mx-auto">
+                    Preserving culinary traditions while creating memorable experiences
+                </p>
+            </div>
+            
+            <div class="grid md:grid-cols-3 gap-8">
+                <div class="text-center reveal card-hover bg-white/20 backdrop-blur-sm rounded-2xl p-8">
+                    <div class="w-16 h-16 bg-heritage-yellow rounded-full flex items-center justify-center mx-auto mb-6">
+                        <svg class="w-8 h-8 text-deep-charcoal" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"></path>
+                        </svg>
+                    </div>
+                    <h3 class="text-2xl font-display font-semibold text-white mb-4">Authentic Flavors</h3>
+                    <p class="text-white/90">
+                        Every recipe is crafted with traditional spices and techniques, ensuring the authentic taste of Indian street food in every bite.
+                    </p>
+                </div>
+                
+                <div class="text-center reveal card-hover bg-white/20 backdrop-blur-sm rounded-2xl p-8">
+                    <div class="w-16 h-16 bg-terracotta-warm rounded-full flex items-center justify-center mx-auto mb-6">
+                        <svg class="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z"></path>
+                        </svg>
+                    </div>
+                    <h3 class="text-2xl font-display font-semibold text-white mb-4">Fresh Ingredients</h3>
+                    <p class="text-white/90">
+                        We source the freshest local ingredients daily, ensuring that every dish is made with the highest quality components.
+                    </p>
+                </div>
+                
+                <div class="text-center reveal card-hover bg-white/20 backdrop-blur-sm rounded-2xl p-8">
+                    <div class="w-16 h-16 bg-bougainvillea-pink rounded-full flex items-center justify-center mx-auto mb-6">
+                        <svg class="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z"></path>
+                        </svg>
+                    </div>
+                    <h3 class="text-2xl font-display font-semibold text-white mb-4">Community Hub</h3>
+                    <p class="text-white/90">
+                        More than just a café, we're a gathering place where locals and visitors come together to share stories and create memories.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Café Gallery -->
+    <section class="py-20 bg-white">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-16 reveal">
+                <h2 class="text-4xl md:text-5xl font-display font-bold text-gradient mb-4">Our Space</h2>
+                <p class="text-xl text-monsoon-green max-w-2xl mx-auto">
+                    Step into our heritage building and experience the perfect blend of colonial charm and modern comfort
+                </p>
+            </div>
+            
+            <div class="splide" id="gallery-carousel">
+                <div class="splide__track">
+                    <ul class="splide__list">
+                        <li class="splide__slide">
+                            <div class="relative h-96 rounded-2xl overflow-hidden">
+                                <img src="resources/hero-cafe.jpg" alt="Café Interior" class="w-full h-full object-cover">
+                                <div class="absolute inset-0 bg-black/30 flex items-end">
+                                    <div class="p-8 text-white">
+                                        <h3 class="text-2xl font-display font-semibold mb-2">Colonial Elegance</h3>
+                                        <p>High ceilings and arched windows create an atmosphere of timeless charm</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </li>
+                        <li class="splide__slide">
+                            <div class="relative h-96 rounded-2xl overflow-hidden">
+                                <img src="resources/hero-food.jpg" alt="Food Preparation" class="w-full h-full object-cover">
+                                <div class="absolute inset-0 bg-black/30 flex items-end">
+                                    <div class="p-8 text-white">
+                                        <h3 class="text-2xl font-display font-semibold mb-2">Fresh Preparation</h3>
+                                        <p>Every dish is prepared with care using traditional methods</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </li>
+                        <li class="splide__slide">
+                            <div class="relative h-96 rounded-2xl overflow-hidden">
+                                <img src="resources/about-interior.jpg" alt="Dining Area" class="w-full h-full object-cover">
+                                <div class="absolute inset-0 bg-black/30 flex items-end">
+                                    <div class="p-8 text-white">
+                                        <h3 class="text-2xl font-display font-semibold mb-2">Comfortable Seating</h3>
+                                        <p>Relax and enjoy your meal in our thoughtfully designed space</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Values & Vision -->
+    <section class="py-20 bg-colonial-cream">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid lg:grid-cols-2 gap-16 items-center">
+                <div class="reveal">
+                    <h2 class="text-4xl md:text-5xl font-display font-bold text-gradient mb-6">
+                        Why Choose <span class="text-heritage-yellow">Aadeshwar</span>?
+                    </h2>
+                    <div class="space-y-6">
+                        <div class="flex items-start space-x-4">
+                            <div class="w-8 h-8 bg-heritage-yellow rounded-full flex items-center justify-center flex-shrink-0 mt-1">
+                                <svg class="w-4 h-4 text-deep-charcoal" fill="currentColor" viewBox="0 0 20 20">
+                                    <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"></path>
+                                </svg>
+                            </div>
+                            <div>
+                                <h3 class="text-xl font-semibold mb-2">Traditional Recipes</h3>
+                                <p class="text-monsoon-green">Every dish follows time-tested recipes passed down through generations of street food masters.</p>
+                            </div>
+                        </div>
+                        
+                        <div class="flex items-start space-x-4">
+                            <div class="w-8 h-8 bg-terracotta-warm rounded-full flex items-center justify-center flex-shrink-0 mt-1">
+                                <svg class="w-4 h-4 text-white" fill="currentColor" viewBox="0 0 20 20">
+                                    <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"></path>
+                                </svg>
+                            </div>
+                            <div>
+                                <h3 class="text-xl font-semibold mb-2">Heritage Setting</h3>
+                                <p class="text-monsoon-green">Dine in a beautifully preserved colonial building that captures the essence of Puducherry's French Quarter.</p>
+                            </div>
+                        </div>
+                        
+                        <div class="flex items-start space-x-4">
+                            <div class="w-8 h-8 bg-bougainvillea-pink rounded-full flex items-center justify-center flex-shrink-0 mt-1">
+                                <svg class="w-4 h-4 text-white" fill="currentColor" viewBox="0 0 20 20">
+                                    <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"></path>
+                                </svg>
+                            </div>
+                            <div>
+                                <h3 class="text-xl font-semibold mb-2">Affordable Excellence</h3>
+                                <p class="text-monsoon-green">Premium quality street food at prices that make authentic flavors accessible to everyone.</p>
+                            </div>
+                        </div>
+                        
+                        <div class="flex items-start space-x-4">
+                            <div class="w-8 h-8 bg-monsoon-green rounded-full flex items-center justify-center flex-shrink-0 mt-1">
+                                <svg class="w-4 h-4 text-white" fill="currentColor" viewBox="0 0 20 20">
+                                    <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"></path>
+                                </svg>
+                            </div>
+                            <div>
+                                <h3 class="text-xl font-semibold mb-2">Local Community</h3>
+                                <p class="text-monsoon-green">We're proud to be part of the Heritage Town community, supporting local suppliers and celebrating regional flavors.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="reveal">
+                    <img src="resources/hero-food.jpg" alt="Food Quality" class="w-full h-96 object-cover rounded-2xl shadow-lg">
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Call to Action -->
+    <section class="py-20 bg-deep-charcoal text-white">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+            <h2 class="text-4xl font-display font-bold mb-6">
+                Experience Our <span class="text-heritage-yellow">Heritage</span>
+            </h2>
+            <p class="text-xl text-white/80 mb-8 max-w-2xl mx-auto">
+                Come visit us in the heart of Heritage Town and discover why Aadeshwar Café has become a beloved destination for food lovers and culture enthusiasts alike.
+            </p>
+            <div class="flex flex-col sm:flex-row gap-4 justify-center items-center">
+                <a href="menu.html" class="bg-heritage-yellow text-deep-charcoal px-8 py-4 rounded-full font-semibold text-lg hover:bg-opacity-90 transition-all transform hover:scale-105 pulse-glow">
+                    Explore Our Menu
+                </a>
+                <a href="contact.html" class="border-2 border-heritage-yellow text-heritage-yellow px-8 py-4 rounded-full font-semibold text-lg hover:bg-heritage-yellow hover:text-deep-charcoal transition-all">
+                    Visit Us Today
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-deep-charcoal text-white py-12">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid md:grid-cols-4 gap-8">
+                <div class="md:col-span-2">
+                    <h3 class="text-2xl font-display font-bold text-heritage-yellow mb-4">Aadeshwar Café</h3>
+                    <p class="text-white/80 mb-4">
+                        Authentic Indian street food in the heart of Heritage Town, Puducherry. 
+                        Where French colonial charm meets vibrant Indian flavors.
+                    </p>
+                    <div class="flex space-x-4">
+                        <a href="tel:+919514548888" class="text-heritage-yellow hover:text-white transition-colors">
+                            📞 +91 95145 48888
+                        </a>
+                    </div>
+                </div>
+                
+                <div>
+                    <h4 class="text-lg font-semibold mb-4 text-heritage-yellow">Quick Links</h4>
+                    <ul class="space-y-2">
+                        <li><a href="menu.html" class="text-white/80 hover:text-white transition-colors">Menu</a></li>
+                        <li><a href="about.html" class="text-white/80 hover:text-white transition-colors">About Us</a></li>
+                        <li><a href="contact.html" class="text-white/80 hover:text-white transition-colors">Contact</a></li>
+                        <li><a href="https://www.zomato.com/puducherry/aadeshwar-cafe-heritage-town/order" target="_blank" class="text-white/80 hover:text-white transition-colors">Order Online</a></li>
+                    </ul>
+                </div>
+                
+                <div>
+                    <h4 class="text-lg font-semibold mb-4 text-heritage-yellow">Hours</h4>
+                    <p class="text-white/80 mb-2">Daily: 12:00 PM – 10:30 PM</p>
+                    <p class="text-white/60 text-sm">Open all days including holidays</p>
+                </div>
+            </div>
+            
+            <div class="border-t border-white/20 mt-8 pt-8 text-center">
+                <p class="text-white/60">
+                    © 2024 Aadeshwar Café. All rights reserved. | 81, Ground Floor, Eswaran Koil Street, Heritage Town, Puducherry
+                </p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="main.js"></script>
+</body>
+</html>
